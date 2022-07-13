@@ -1,25 +1,25 @@
+import {Link} from 'react-router-dom';
+import Logo from '../../components/logo/logo';
+
 const PageNotFound = () => (
   <div className="page page--gray">
     <header className="header">
       <div className="container">
         <div className="header__wrapper">
           <div className="header__left">
-            <a className="header__logo-link" href="main.html">
-              <img
-                className="header__logo"
-                src="img/logo.svg"
-                alt="6 cities logo"
-                width={81}
-                height={41}
-              />
-            </a>
+            <Logo />
           </div>
         </div>
       </div>
     </header>
     <main className="page__main page__main--login">
-      <h1>Page not found</h1>
-      
+      <div className="cities" style={{'minHeight': '80vh'}}>
+        <div className="container">
+          <h1>Page not found</h1>
+          <Link to={'/'} style={{'display': 'inline-flex', 'marginBottom': '15px'}}>Back to main page</Link>
+        </div>
+      </div>
+
     </main>
   </div>
 );
