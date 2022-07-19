@@ -5,19 +5,21 @@ import Login from '../../pages/login/login';
 import Favorites from '../../pages/favorites/favorites';
 import Room from '../../pages/room/room';
 import PageNotFound from '../../pages/page-not-found/page-not-found';
-
 import {AppRoute, AuthorizationStatus} from '../../const';
+
+import { CardsType } from '../../types/cards';
 
 type AppProps = {
   cardsCount: number;
+  offers: CardsType;
 }
 
-const App = ({cardsCount} : AppProps): JSX.Element => (
+const App = ({cardsCount, offers} : AppProps): JSX.Element => (
   <BrowserRouter>
     <Routes>
       <Route
         path={AppRoute.Root}
-        element={<MainPage cardsCount={cardsCount} />}
+        element={<MainPage cardsCount={cardsCount} offers={offers} />}
       />
       <Route
         path={AppRoute.Login}
@@ -27,9 +29,9 @@ const App = ({cardsCount} : AppProps): JSX.Element => (
         path={AppRoute.Favorites}
         element={
           <PrivateRoute
-            authorizationStatus={AuthorizationStatus.NoAuth}
+            authorizationStatus={AuthorizationStatus.Auth}
           >
-            <Favorites />
+            <Favorites offers={offers} />
           </PrivateRoute>
         }
       />

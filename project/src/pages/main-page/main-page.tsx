@@ -1,41 +1,13 @@
-import Card from '../../components/card/card';
+import { CardsType } from '../../types/cards';
 import Logo from '../../components/logo/logo';
+import CardsList from '../../components/cards-list/cards-list';
 
 type MainPageProps = {
   cardsCount: number;
+  offers: CardsType;
 }
 
-const mocCardArray = [
-  {
-    id: 0,
-  },
-  {
-    id: 1,
-  },
-  {
-    id: 2,
-  },
-  {
-    id: 3,
-  },
-  {
-    id: 4,
-  },
-  {
-    id: 5,
-  },
-  {
-    id: 6,
-  },
-  {
-    id: 7,
-  },
-  {
-    id: 8,
-  },
-];
-
-const MainPage = ({cardsCount} : MainPageProps) => (
+const MainPage = ({cardsCount, offers} : MainPageProps) => (
   <div className="page page--gray page--main">
     <header className="header">
       <div className="container">
@@ -136,15 +108,7 @@ const MainPage = ({cardsCount} : MainPageProps) => (
                 </li>
               </ul>
             </form>
-            <div className="cities__places-list places__list tabs__content">
-              {
-                mocCardArray.map((card, i) => {
-                  if (i < cardsCount) {
-                    return <Card key={`card-${card.id}`} />;
-                  }
-                })
-              }
-            </div>
+            <CardsList offers={offers} />
           </section>
           <div className="cities__right-section">
             <section className="cities__map map" />
