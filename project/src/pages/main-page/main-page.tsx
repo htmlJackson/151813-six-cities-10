@@ -1,6 +1,9 @@
 import { CardsType } from '../../types/cards';
 import Logo from '../../components/logo/logo';
 import CardsList from '../../components/cards-list/cards-list';
+import Map from '../../components/map/map';
+import { CITY } from '../../mocs/city';
+import { POINTS } from '../../mocs/points';
 
 type MainPageProps = {
   cardsCount: number;
@@ -111,7 +114,7 @@ const MainPage = ({cardsCount, offers} : MainPageProps) => (
             <CardsList offers={offers} />
           </section>
           <div className="cities__right-section">
-            <section className="cities__map map" />
+            <Map city={CITY} points={POINTS} />
           </div>
         </div>
       </div>
