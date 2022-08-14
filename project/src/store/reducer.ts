@@ -1,17 +1,17 @@
 import {createReducer} from '@reduxjs/toolkit';
-import {CITY} from '../mocs/city';
 import {offers} from '../mocs/offers';
+import {changeCity} from '../store/action';
 
 const initialState = {
-  city: CITY,
+  city: 'Paris',
   offers: offers,
 };
 
 const reducer = createReducer(initialState, (builder) => {
-  // builder
-  //   .addCase(incrementStep, (state) => {
-  //     state.step = state.step + STEP_COUNT;
-  //   });
+  builder
+    .addCase(changeCity, (state, action) => {
+      state.city = action.payload;
+    });
 });
 
 export {reducer};

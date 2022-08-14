@@ -10,3 +10,11 @@ export type CardType = {
 };
 
 export type CardsType = CardType[];
+
+export type OfferType = {
+  'city': string,
+  'cards': CardsType,
+};
+
+
+export type OffersType = OfferType[];
