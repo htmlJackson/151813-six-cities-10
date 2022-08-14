@@ -1,4 +1,4 @@
-import {useAppDispatch, useAppSelector} from '../../hooks';
+import {useAppDispatch} from '../../hooks';
 import {changeCity} from '../../store/action';
 
 type CitiesListProps = {
