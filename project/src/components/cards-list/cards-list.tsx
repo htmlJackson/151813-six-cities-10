@@ -1,9 +1,9 @@
 import Card from '../card/card';
-import { CardsType } from '../../types/cards';
+import { OffersType } from '../../types/offers';
 import { useState } from 'react';
 
 type CardsListProps = {
-  offers: CardsType;
+  offers: OffersType;
 };
 
 const CardsList = ({offers} : CardsListProps) => {
@@ -17,7 +17,7 @@ const CardsList = ({offers} : CardsListProps) => {
         <span style={{'display': 'none'}}>{activeCard}</span>
       }
       {
-        offers.map((offer) => <Card setActiveCard={setActiveCard} offer={offer} key={`key-${offer.id}-${offer.imgSrc}`} />)
+        offers.map((offer) => <Card setActiveCard={setActiveCard} offer={offer} key={`key-${offer.id}-${offer.images[0]}`} />)
       }
     </div>
   );

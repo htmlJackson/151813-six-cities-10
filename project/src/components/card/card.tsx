@@ -1,15 +1,14 @@
-import { CardType } from '../../types/cards';
+import { OfferType } from '../../types/offers';
 import { Link } from 'react-router-dom';
 import { getLinkToRoom } from '../../utils';
 
 type CardProps = {
-  offer: CardType;
+  offer: OfferType;
   setActiveCard: (id : number) => void;
 };
 
 const Card = ({offer, setActiveCard} : CardProps) => {
-  const {id, title, price, imgSrc, type, rating, isFavorite, isPremium} = offer;
-
+  const {id, title, price, images, type, rating, isFavorite, isPremium} = offer;
   return (
     <article
       className="cities__card place-card"
@@ -28,7 +27,7 @@ const Card = ({offer, setActiveCard} : CardProps) => {
         <Link to={getLinkToRoom(id)}>
           <img
             className="place-card__image"
-            src={imgSrc}
+            src={images[0]}
             width={260}
             height={200}
             alt="Place image"
