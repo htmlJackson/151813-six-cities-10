@@ -8,24 +8,32 @@ import PageNotFound from '../../pages/page-not-found/page-not-found';
 import {AppRoute, AuthorizationStatus} from '../../const';
 import {useAppSelector} from '../../hooks';
 
-import { OffersType } from '../../types/cards';
+import LoadingScreen from '../loading-screen/loading-screen';
+
 
 type AppProps = {
-  offers: OffersType;
   citiesList: string[];
 }
 
-const App = ({offers, citiesList} : AppProps): JSX.Element => {
+const App = ({citiesList} : AppProps): JSX.Element => {
+
+  const {isDataLoaded} = useAppSelector((state) => state);
+
   const currentCity = useAppSelector((state) => state.city);
 
-  const currentOffers = offers.find((offer) => offer.city === currentCity)?.cards || offers[0].cards;
+
+  if (isDataLoaded) {
+    return (
+      <LoadingScreen />
+    );
+  }
 
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path={AppRoute.Root}
-          element={<MainPage offers={currentOffers} citiesList={citiesList} currentCity={currentCity} />}
+          element={<MainPage citiesList={citiesList} currentCity={currentCity} />}
         />
         <Route
           path={AppRoute.Login}
@@ -37,7 +45,7 @@ const App = ({offers, citiesList} : AppProps): JSX.Element => {
             <PrivateRoute
               authorizationStatus={AuthorizationStatus.Auth}
             >
-              <Favorites offers={currentOffers} />
+              <Favorites />
             </PrivateRoute>
           }
         />

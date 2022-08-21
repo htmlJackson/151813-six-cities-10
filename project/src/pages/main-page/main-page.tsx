@@ -1,19 +1,20 @@
-import { CardsType } from '../../types/cards';
 import Logo from '../../components/logo/logo';
 import CardsList from '../../components/cards-list/cards-list';
 import Map from '../../components/map/map';
 import CitiesList from '../../components/cities-list/cities-list';
 import { CITY } from '../../mocs/city';
 import { POINTS } from '../../mocs/points';
+import { useAppSelector } from '../../hooks';
 
 type MainPageProps = {
-  offers: CardsType;
   citiesList: string[];
   currentCity: string;
 };
 
-const MainPage = ({offers, citiesList, currentCity} : MainPageProps) => {
+const MainPage = ({citiesList, currentCity} : MainPageProps) => {
   const currentMarkers = POINTS.find((point) => point.city === currentCity)?.markers || POINTS[0].markers;
+
+  const {filteredOffers, city} = useAppSelector((state) => state);
 
   return (
     <div className="page page--gray page--main">
@@ -56,7 +57,7 @@ const MainPage = ({offers, citiesList, currentCity} : MainPageProps) => {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">312 places to stay in Amsterdam</b>
+              <b className="places__found">{filteredOffers.length} places to stay in {city}</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
@@ -83,7 +84,7 @@ const MainPage = ({offers, citiesList, currentCity} : MainPageProps) => {
                   </li>
                 </ul>
               </form>
-              <CardsList offers={offers} />
+              <CardsList offers={filteredOffers} />
             </section>
             <div className="cities__right-section">
               <Map city={CITY} points={currentMarkers} />

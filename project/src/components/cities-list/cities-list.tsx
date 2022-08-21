@@ -9,6 +9,10 @@ type CitiesListProps = {
 const CitiesList = ({citiesList, currentCity} : CitiesListProps) => {
   const dispatch = useAppDispatch();
 
+  const onCityChange = (city : string) => {
+    dispatch(changeCity(city));
+  };
+
   return (
     <section className="locations container">
       <ul className="locations__list tabs__list">
@@ -20,7 +24,7 @@ const CitiesList = ({citiesList, currentCity} : CitiesListProps) => {
                 className={`locations__item-link tabs__item${city === currentCity ? ' tabs__item--active' : ''}`}
                 onClick={(evt) => {
                   evt.preventDefault();
-                  dispatch(changeCity(city));
+                  onCityChange(city);
                 }}
               >
                 <span>{city}</span>

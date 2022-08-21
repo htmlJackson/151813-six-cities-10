@@ -1,13 +1,13 @@
-import { CardType } from '../../types/cards';
+import { OfferType } from '../../types/offers';
 import { Link } from 'react-router-dom';
 import { getLinkToRoom } from '../../utils';
 
 type FavoritesCard = {
-  offer: CardType;
+  offer: OfferType;
 };
 
 const FavoritesCard = ({offer} : FavoritesCard) => {
-  const {id, title, price, imgSrc, type, rating, isFavorite, isPremium} = offer;
+  const {id, title, price, images, type, rating, isFavorite, isPremium} = offer;
 
   return (
     <article className="favorites__card place-card">
@@ -22,7 +22,7 @@ const FavoritesCard = ({offer} : FavoritesCard) => {
         <Link to={getLinkToRoom(id)}>
           <img
             className="place-card__image"
-            src={imgSrc}
+            src={images[0]}
             width={150}
             height={110}
             alt="Place image"
