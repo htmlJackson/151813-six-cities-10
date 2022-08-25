@@ -1,53 +1,21 @@
-import Logo from '../../components/logo/logo';
 import CardsList from '../../components/cards-list/cards-list';
 import Map from '../../components/map/map';
 import CitiesList from '../../components/cities-list/cities-list';
 import { CITY } from '../../mocs/city';
 import { POINTS } from '../../mocs/points';
 import { useAppSelector } from '../../hooks';
+import { citiesList } from '../../const';
+import Header from '../../components/header/header';
 
-type MainPageProps = {
-  citiesList: string[];
-  currentCity: string;
-};
-
-const MainPage = ({citiesList, currentCity} : MainPageProps) => {
+const MainPage = () => {
+  const currentCity = useAppSelector((state) => state.city);
+  const filteredOffers = useAppSelector((state) => state.filteredOffers);
   const currentMarkers = POINTS.find((point) => point.city === currentCity)?.markers || POINTS[0].markers;
 
-  const {filteredOffers, city} = useAppSelector((state) => state);
 
   return (
     <div className="page page--gray page--main">
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <div className="header__left">
-              <Logo />
-            </div>
-            <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <a
-                    className="header__nav-link header__nav-link--profile"
-                    href="#"
-                  >
-                    <div className="header__avatar-wrapper user__avatar-wrapper"></div>
-                    <span className="header__user-name user__name">
-                      Oliver.conner@gmail.com
-                    </span>
-                    <span className="header__favorite-count">3</span>
-                  </a>
-                </li>
-                <li className="header__nav-item">
-                  <a className="header__nav-link" href="#">
-                    <span className="header__signout">Sign out</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </header>
+      <Header />
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
@@ -57,7 +25,7 @@ const MainPage = ({citiesList, currentCity} : MainPageProps) => {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{filteredOffers.length} places to stay in {city}</b>
+              <b className="places__found">{filteredOffers.length} places to stay in {currentCity}</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>

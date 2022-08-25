@@ -21,4 +21,6 @@ export const citiesList = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg
 
 export enum APIRoute {
   Offers = '/hotels',
+  Login = '/login',
+  Logout = '/logout'
 }

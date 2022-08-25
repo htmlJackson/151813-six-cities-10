@@ -5,22 +5,14 @@ import Login from '../../pages/login/login';
 import Favorites from '../../pages/favorites/favorites';
 import Room from '../../pages/room/room';
 import PageNotFound from '../../pages/page-not-found/page-not-found';
-import {AppRoute, AuthorizationStatus} from '../../const';
+import {AppRoute} from '../../const';
 import {useAppSelector} from '../../hooks';
 
 import LoadingScreen from '../loading-screen/loading-screen';
 
+const App = (): JSX.Element => {
 
-type AppProps = {
-  citiesList: string[];
-}
-
-const App = ({citiesList} : AppProps): JSX.Element => {
-
-  const {isDataLoaded} = useAppSelector((state) => state);
-
-  const currentCity = useAppSelector((state) => state.city);
-
+  const isDataLoaded = useAppSelector((state) => state.isDataLoaded);
 
   if (isDataLoaded) {
     return (
@@ -33,7 +25,7 @@ const App = ({citiesList} : AppProps): JSX.Element => {
       <Routes>
         <Route
           path={AppRoute.Root}
-          element={<MainPage citiesList={citiesList} currentCity={currentCity} />}
+          element={<MainPage />}
         />
         <Route
           path={AppRoute.Login}
@@ -42,9 +34,7 @@ const App = ({citiesList} : AppProps): JSX.Element => {
         <Route
           path={AppRoute.Favorites}
           element={
-            <PrivateRoute
-              authorizationStatus={AuthorizationStatus.Auth}
-            >
+            <PrivateRoute>
               <Favorites />
             </PrivateRoute>
           }
