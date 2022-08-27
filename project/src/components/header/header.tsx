@@ -12,7 +12,7 @@ type HeaderProps = {
 const Header = ({ noNav = false }: HeaderProps) => {
 
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
-  
+
   const dispatch = useAppDispatch();
 
   return (
