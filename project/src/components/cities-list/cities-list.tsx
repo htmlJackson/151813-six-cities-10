@@ -1,13 +1,12 @@
 import {useAppDispatch} from '../../hooks';
-import {changeCity} from '../../store/action';
+import {changeCity} from '../../store/app-data/app-data';
+import { citiesList } from '../../const';
+import { useAppSelector } from '../../hooks';
+import {getCity} from '../../store/app-data/selectors';
 
-type CitiesListProps = {
-  citiesList: string[];
-  currentCity: string;
-}
-
-const CitiesList = ({citiesList, currentCity} : CitiesListProps) => {
+const CitiesList = () => {
   const dispatch = useAppDispatch();
+  const currentCity = useAppSelector(getCity);
 
   const onCityChange = (city : string) => {
     dispatch(changeCity(city));

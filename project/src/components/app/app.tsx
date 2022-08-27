@@ -10,9 +10,11 @@ import {useAppSelector} from '../../hooks';
 
 import LoadingScreen from '../loading-screen/loading-screen';
 
+import {getLoadedDataStatus} from '../../store/app-data/selectors';
+
 const App = (): JSX.Element => {
 
-  const isDataLoaded = useAppSelector((state) => state.isDataLoaded);
+  const isDataLoaded = useAppSelector(getLoadedDataStatus);
 
   if (isDataLoaded) {
     return (

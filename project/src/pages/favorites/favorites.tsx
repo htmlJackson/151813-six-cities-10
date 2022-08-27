@@ -2,9 +2,10 @@ import FavoritesCard from '../../components/favorites-card/favorites-card';
 import Header from '../../components/header/header';
 import Footer from '../../components/footer/footer';
 import { useAppSelector } from '../../hooks';
+import {filteredOffers} from '../../store/app-data/selectors';
 
 const Favorites = () => {
-  const offers = useAppSelector((state) => state.offers);
+  const offers = useAppSelector(filteredOffers);
 
   return (
     <div className="page">

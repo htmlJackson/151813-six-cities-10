@@ -1,14 +1,13 @@
 import Card from '../card/card';
-import { OffersType } from '../../types/offers';
 import { useState } from 'react';
+import { useAppSelector } from '../../hooks';
+import {filteredOffers} from '../../store/app-data/selectors';
 
-type CardsListProps = {
-  offers: OffersType;
-};
-
-const CardsList = ({offers} : CardsListProps) => {
+const CardsList = () => {
 
   const [activeCard, setActiveCard] = useState(0);
+
+  const offers = useAppSelector(filteredOffers);
 
   return (
     <div className="cities__places-list places__list tabs__content">
