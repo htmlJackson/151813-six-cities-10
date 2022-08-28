@@ -1,7 +1,7 @@
 import {AxiosInstance} from 'axios';
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {AppDispatch, State} from '../types/state.js';
-import { OffersType } from '../types/offers.js';
+import { OfferType, OffersType, HotelId } from '../types/offers.js';
 import {AppRoute, APIRoute} from '../const';
 import {redirectToRoute} from './action';
 import {AuthData} from '../types/auth-data';
@@ -16,6 +16,18 @@ export const fetchOffersAction = createAsyncThunk<OffersType, undefined, {
   'fetchOffers',
   async (_arg, {dispatch, extra: api}) => {
     const {data} = await api.get<OffersType>(APIRoute.Offers);
+    return data;
+  },
+);
+
+export const fetchOfferAction = createAsyncThunk<OfferType, HotelId, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
+  'fetchOffer',
+  async (hotelId, {dispatch, extra: api}) => {
+    const {data} = await api.get<OfferType>(`${APIRoute.Offers}/${hotelId}`);
     return data;
   },
 );

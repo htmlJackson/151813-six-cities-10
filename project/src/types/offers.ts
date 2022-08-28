@@ -34,3 +34,5 @@ export type OfferType = {
 };
 
 export type OffersType = OfferType[];
+
+export type HotelId = string | undefined;

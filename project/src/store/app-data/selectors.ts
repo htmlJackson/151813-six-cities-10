@@ -1,6 +1,6 @@
 import {NameSpace} from '../../const';
 import {State} from '../../types/state';
-import {OffersType} from '../../types/offers';
+import {OfferType, OffersType} from '../../types/offers';
 import { createSelector } from '@reduxjs/toolkit';
 
 export const getOffers = (state: State): OffersType => state[NameSpace.Data].offers;
@@ -12,3 +12,5 @@ export const filteredOffers = createSelector(
 );
 
 export const getLoadedDataStatus = (state: State): boolean => state[NameSpace.Data].isDataLoaded;
+
+export const getOffer = (state: State): OfferType | null => state[NameSpace.Data].currentOffer;

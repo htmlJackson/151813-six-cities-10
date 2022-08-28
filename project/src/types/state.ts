@@ -1,6 +1,6 @@
 import {store} from '../store/index';
 import {AuthorizationStatus} from '../const';
-import { OffersType } from '../types/offers';
+import { OfferType, OffersType } from '../types/offers';
 
 export type UserProcess = {
   authorizationStatus: AuthorizationStatus
@@ -9,6 +9,7 @@ export type UserProcess = {
 export type AppData = {
   city: string;
   offers: OffersType;
+  currentOffer: OfferType | null;
   isDataLoaded: boolean;
 };
 

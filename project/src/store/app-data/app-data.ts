@@ -1,11 +1,12 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {NameSpace, citiesList} from '../../const';
 import {AppData} from '../../types/state';
-import {fetchOffersAction} from '../api-actions';
+import {fetchOfferAction, fetchOffersAction} from '../api-actions';
 
 const initialState: AppData = {
   city: citiesList[0],
   offers: [],
+  currentOffer: null,
   isDataLoaded: false,
 };
 
@@ -24,6 +25,13 @@ export const appData = createSlice({
       })
       .addCase(fetchOffersAction.fulfilled, (state, action) => {
         state.offers = action.payload;
+        state.isDataLoaded = false;
+      })
+      .addCase(fetchOfferAction.pending, (state, action) => {
+        state.isDataLoaded = true;
+      })
+      .addCase(fetchOfferAction.fulfilled, (state, action) => {
+        state.currentOffer = action.payload;
         state.isDataLoaded = false;
       });
   }

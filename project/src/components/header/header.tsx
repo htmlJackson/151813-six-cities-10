@@ -40,7 +40,7 @@ const Header = ({ noNav = false }: HeaderProps) => {
                       </a>
                     </li>
                     <li className="header__nav-item">
-                      <a className="header__nav-link" onClick={() => dispatch(logoutAction)}>
+                      <a className="header__nav-link" onClick={() => dispatch(logoutAction())}>
                         <span className="header__signout">Sign out</span>
                       </a>
                     </li>
