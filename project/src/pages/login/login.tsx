@@ -1,7 +1,7 @@
 import Header from '../../components/header/header';
-import {useRef, FormEvent} from 'react';
+import {useRef, FormEvent, useEffect} from 'react';
 import {useNavigate} from 'react-router-dom';
-import {useAppDispatch} from '../../hooks';
+import {useAppSelector, useAppDispatch} from '../../hooks';
 import {AppRoute} from '../../const';
 import {AuthData} from '../../types/auth-data';
 import {loginAction} from '../../store/api-actions';
@@ -28,6 +28,14 @@ const Login = () => {
       });
     }
   };
+
+  const AuthStatus = useAppSelector((state) => state.USER.authorizationStatus);
+
+  useEffect(() => {
+    if (AuthStatus === 'AUTH') {
+      navigate(AppRoute.Root);
+    }
+  }, [AuthStatus]);
 
   return (
     <div className="page page--gray page--login">

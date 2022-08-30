@@ -1,12 +1,14 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {NameSpace, citiesList} from '../../const';
+import {NameSpace, citiesList, emptyOffer} from '../../const';
 import {AppData} from '../../types/state';
-import {fetchOfferAction, fetchOffersAction} from '../api-actions';
+import {fetchOfferAction, fetchOffersAction, fetchCommentsAction} from '../api-actions';
 
 const initialState: AppData = {
   city: citiesList[0],
   offers: [],
-  currentOffer: null,
+  currentOffer: emptyOffer,
+  activeCard: null,
+  comments: [],
   isDataLoaded: false,
 };
 
@@ -16,6 +18,9 @@ export const appData = createSlice({
   reducers: {
     changeCity: (state, action) => {
       state.city = action.payload;
+    },
+    setActiveCard: (state, action) => {
+      state.activeCard = action.payload;
     },
   },
   extraReducers(builder) {
@@ -27,14 +32,13 @@ export const appData = createSlice({
         state.offers = action.payload;
         state.isDataLoaded = false;
       })
-      .addCase(fetchOfferAction.pending, (state, action) => {
-        state.isDataLoaded = true;
-      })
       .addCase(fetchOfferAction.fulfilled, (state, action) => {
         state.currentOffer = action.payload;
-        state.isDataLoaded = false;
+      })
+      .addCase(fetchCommentsAction.fulfilled, (state, action) => {
+        state.comments = action.payload;
       });
   }
 });
 
-export const {changeCity} = appData.actions;
+export const {changeCity, setActiveCard} = appData.actions;

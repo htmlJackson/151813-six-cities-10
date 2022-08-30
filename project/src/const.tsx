@@ -22,7 +22,8 @@ export const citiesList = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg
 export enum APIRoute {
   Offers = '/hotels',
   Login = '/login',
-  Logout = '/logout'
+  Logout = '/logout',
+  Comments = '/comments',
 }
 
 export enum NameSpace {
@@ -30,3 +31,46 @@ export enum NameSpace {
   User = 'USER',
   App = 'App',
 }
+
+
+export const emptyOffer = {
+  bedrooms: 0,
+  city: {
+    location: {
+      latitude: 0,
+      longitude: 0,
+      zoom: 0,
+    },
+    name: '',
+  },
+  description: '',
+  goods: [''],
+  host: {
+    avatarUrl: '',
+    id: 0,
+    isPro: false,
+    name: '',
+  },
+  id: 0,
+  images: [''],
+  isFavorite: false,
+  isPremium: false,
+  location: {
+    latitude: 0,
+    longitude: 0,
+    zoom: 0,
+  },
+  maxAdults: 0,
+  previewImage: '',
+  price: 0,
+  rating: 0,
+  title: '',
+  type: '',
+};
+
+export const CITY_DEFAULT = {
+  title: 'Нью-Йорк',
+  latitude: 52.3909553943508,
+  longitude:  4.929309666406198,
+  zoom: 10,
+};

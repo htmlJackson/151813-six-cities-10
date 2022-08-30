@@ -1,15 +1,29 @@
 import {store} from '../store/index';
 import {AuthorizationStatus} from '../const';
 import { OfferType, OffersType } from '../types/offers';
+import { CommentsType } from './comments';
+import { Marker } from 'leaflet';
 
 export type UserProcess = {
-  authorizationStatus: AuthorizationStatus
+  user: UserData;
+  authorizationStatus: AuthorizationStatus;
+};
+
+export type UserData = {
+  avatarUrl?: string;
+  email?: string;
+  id?: number;
+  isPro?: boolean;
+  name?: string;
+  token?: string;
 };
 
 export type AppData = {
   city: string;
   offers: OffersType;
-  currentOffer: OfferType | null;
+  currentOffer: OfferType;
+  activeCard: Marker | null;
+  comments: CommentsType;
   isDataLoaded: boolean;
 };
 

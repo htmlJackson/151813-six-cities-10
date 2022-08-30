@@ -10,7 +10,7 @@ const useMap = (
   const isRenderedRef = useRef<boolean>(false);
 
   useEffect(() => {
-    if (mapRef.current !== null && !isRenderedRef.current) {
+    if (mapRef.current !== null && map === null && !isRenderedRef.current) {
 
       const instance = new Map(mapRef.current, {
         center: {
@@ -29,12 +29,20 @@ const useMap = (
       );
 
       instance.addLayer(layer);
-
       setMap(instance);
 
       isRenderedRef.current = true;
     }
   }, [mapRef, city]);
+
+  useEffect(() => {
+    if (map) {
+      map.flyTo([city.lat, city.lng], city.zoom, {
+        animate: true,
+        duration: 0.9
+      });
+    }
+  }, [map, city]);
 
   return map;
 };

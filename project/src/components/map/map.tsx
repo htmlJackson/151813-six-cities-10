@@ -1,16 +1,11 @@
 import { useRef, useEffect } from 'react';
 import { Icon, Marker } from 'leaflet';
 import useMap from '../../hooks/useMap';
-import { City, Markers } from '../../types/map';
-import { URL_MARKER_DEFAULT } from '../../const';
+import { City } from '../../types/map';
+import { URL_MARKER_DEFAULT, URL_MARKER_CURRENT, CITY_DEFAULT } from '../../const';
 import {useAppSelector} from '../../hooks';
 import 'leaflet/dist/leaflet.css';
-import {getCity} from '../../store/app-data/selectors';
-
-type MapProps = {
-  city: City;
-  points: Markers;
-};
+import {getActiveCard, getCity, getCityLocation, getCityMarkers} from '../../store/app-data/selectors';
 
 const defaultCustomIcon = new Icon({
   iconUrl: URL_MARKER_DEFAULT,
@@ -18,29 +13,50 @@ const defaultCustomIcon = new Icon({
   iconAnchor: [20, 40]
 });
 
+const currentCustomIcon = new Icon({
+  iconUrl: URL_MARKER_CURRENT,
+  iconSize: [40, 40],
+  iconAnchor: [20, 40]
+});
 
-function Map(props: MapProps): JSX.Element {
-  const {city, points} = props;
+
+const Map = () : JSX.Element => {
+  const cityLocation = useAppSelector(getCityLocation) || CITY_DEFAULT;
+  const currentCity = useAppSelector(getCity);
+  const points = useAppSelector(getCityMarkers);
+  const activePoint = useAppSelector(getActiveCard);
+
+  const city : City = {
+    title: currentCity,
+    lat: cityLocation?.latitude,
+    lng: cityLocation?.longitude,
+    zoom: cityLocation?.zoom,
+  };
+
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
-  const currentCity = useAppSelector(getCity);
 
   useEffect(() => {
+  
     if (map) {
       points.forEach((point) => {
+        const icon = JSON.stringify(point) === JSON.stringify(activePoint) ? currentCustomIcon : defaultCustomIcon;
+
         const marker = new Marker({
-          lat: point.lat,
-          lng: point.lng
+          lat: point.latitude,
+          lng: point.longitude
         });
 
         marker
           .setIcon(
-            defaultCustomIcon
+            icon
           )
           .addTo(map);
       });
+
     }
-  }, [map, points, currentCity]);
+  }, [map, points, currentCity, city]);
+
 
   return <section className="cities__map map" style={{'height': '648px'}} ref={mapRef} />;
 }

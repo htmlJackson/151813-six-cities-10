@@ -1,18 +1,25 @@
 import { OfferType } from '../../types/offers';
 import { Link } from 'react-router-dom';
 import { getLinkToRoom } from '../../utils';
+import {useAppDispatch} from '../../hooks';
+import {setActiveCard} from '../../store/app-data/app-data';
 
 type CardProps = {
   offer: OfferType;
-  setActiveCard: (id : number) => void;
 };
 
-const Card = ({offer, setActiveCard} : CardProps) => {
-  const {id, title, price, images, type, rating, isFavorite, isPremium} = offer;
+const Card = ({offer} : CardProps) => {
+  const dispatch = useAppDispatch();
+  const {id, title, price, type, rating, isFavorite, isPremium, previewImage, location} = offer;
+
+  const handleMouseEnter = () => {
+    dispatch(setActiveCard(location));
+  };
+
   return (
     <article
       className="cities__card place-card"
-      onMouseEnter={() => setActiveCard(id)}
+      onMouseEnter={handleMouseEnter}
     >
 
       {
@@ -27,7 +34,7 @@ const Card = ({offer, setActiveCard} : CardProps) => {
         <Link to={getLinkToRoom(id)}>
           <img
             className="place-card__image"
-            src={images[0]}
+            src={previewImage}
             width={260}
             height={200}
             alt="Place image"

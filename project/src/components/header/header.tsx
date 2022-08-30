@@ -3,7 +3,7 @@ import { useAppSelector, useAppDispatch } from '../../hooks';
 import {Link} from 'react-router-dom';
 import { AuthorizationStatus} from '../../const';
 import {logoutAction} from '../../store/api-actions';
-import {getAuthorizationStatus} from '../../store/user-process/selectors';
+import {getAuthorizationStatus, getUser} from '../../store/user-process/selectors';
 
 type HeaderProps = {
   noNav?: boolean;
@@ -12,6 +12,7 @@ type HeaderProps = {
 const Header = ({ noNav = false }: HeaderProps) => {
 
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const userData = useAppSelector(getUser);
 
   const dispatch = useAppDispatch();
 
@@ -28,16 +29,15 @@ const Header = ({ noNav = false }: HeaderProps) => {
                 {authorizationStatus === AuthorizationStatus.Auth ? (
                   <>
                     <li className="header__nav-item user">
-                      <a
+                      <Link to="/favorites"
                         className="header__nav-link header__nav-link--profile"
-                        href="#"
                       >
-                        <div className="header__avatar-wrapper user__avatar-wrapper"></div>
+                        <div className="header__avatar-wrapper user__avatar-wrapper" style={{'backgroundImage': `url(${userData.avatarUrl})`}}></div>
                         <span className="header__user-name user__name">
-                          Oliver.conner@gmail.com
+                          {userData.email}
                         </span>
                         <span className="header__favorite-count">3</span>
-                      </a>
+                      </Link>
                     </li>
                     <li className="header__nav-item">
                       <a className="header__nav-link" onClick={() => dispatch(logoutAction())}>

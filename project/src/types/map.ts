@@ -6,16 +6,9 @@ export type City = {
 };
 
 export type Marker = {
-  title: string;
-  lat: number;
-  lng: number;
+  latitude: number;
+  longitude: number;
+  zoom: number;
 };
 
 export type Markers = Marker[];
-
-export type Point = {
-  city: string,
-  markers: Marker[],
-};
-
-export type Points = Point[];

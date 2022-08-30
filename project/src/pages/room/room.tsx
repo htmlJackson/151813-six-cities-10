@@ -1,88 +1,53 @@
-import { useParams } from "react-router-dom";
-import Header from "../../components/header/header";
-import ReviewsForm from "../../components/reviews-form/reviews-form";
-import ReviewsList from "../../components/reviews-list/reviews-list";
-import { getOffer } from "../../store/app-data/selectors";
-import {fetchOfferAction} from '../../store/api-actions';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { useState, useEffect } from "react";
-import { OfferType } from "../../types/offers";
+import Header from '../../components/header/header';
+import Reviews from '../../components/reviews/reviews';
+import { getOffer } from '../../store/app-data/selectors';
+import { fetchOfferAction } from '../../store/api-actions';
+import { useAppSelector } from '../../hooks';
+import useHotelId from '../../hooks/useHotelId';
+import Gallery from '../../components/gallery/gallery';
+import Rating from '../../components/rating/rating';
+import User from '../../components/user/user';
 
 const Room = () => {
-  const {id} = useParams();
-  const dispatch = useAppDispatch();
-  const [hotelData, setHotelData] = useState<OfferType | null>(null);
-  
-  useEffect(() => {
-    dispatch(fetchOfferAction(id));
-  }, []);
-  
-  setHotelData(useAppSelector(getOffer));
 
-  console.log(hotelData);
+  useHotelId(fetchOfferAction);
+
+  const hotelData = useAppSelector(getOffer);
+
+  const {
+    title,
+    isPremium,
+    isFavorite,
+    rating,
+    type,
+    bedrooms,
+    maxAdults,
+    price,
+    goods,
+    host,
+    description,
+  } = hotelData;
 
   return (
     <div className="page">
       <Header />
       <main className="page__main page__main--property">
         <section className="property">
-          <div className="property__gallery-container container">
-            <div className="property__gallery">
-              <div className="property__image-wrapper">
-                <img
-                  className="property__image"
-                  src="img/room.jpg"
-                  alt="Photo studio"
-                />
-              </div>
-              <div className="property__image-wrapper">
-                <img
-                  className="property__image"
-                  src="img/apartment-01.jpg"
-                  alt="Photo studio"
-                />
-              </div>
-              <div className="property__image-wrapper">
-                <img
-                  className="property__image"
-                  src="img/apartment-02.jpg"
-                  alt="Photo studio"
-                />
-              </div>
-              <div className="property__image-wrapper">
-                <img
-                  className="property__image"
-                  src="img/apartment-03.jpg"
-                  alt="Photo studio"
-                />
-              </div>
-              <div className="property__image-wrapper">
-                <img
-                  className="property__image"
-                  src="img/studio-01.jpg"
-                  alt="Photo studio"
-                />
-              </div>
-              <div className="property__image-wrapper">
-                <img
-                  className="property__image"
-                  src="img/apartment-01.jpg"
-                  alt="Photo studio"
-                />
-              </div>
-            </div>
-          </div>
+          <Gallery />
           <div className="property__container container">
             <div className="property__wrapper">
-              <div className="property__mark">
-                <span>Premium</span>
-              </div>
+              {isPremium && (
+                <div className="property__mark">
+                  <span>Premium</span>
+                </div>
+              )}
+
               <div className="property__name-wrapper">
-                <h1 className="property__name">
-                  Beautiful &amp; luxurious studio at great location
-                </h1>
+                <h1 className="property__name">{title}</h1>
                 <button
-                  className="property__bookmark-button button"
+                  className={`property__bookmark-button button${
+                    isFavorite ? ' place-card__bookmark-button--active' : ''
+                  }`}
                   type="button"
                 >
                   <svg
@@ -95,80 +60,48 @@ const Room = () => {
                   <span className="visually-hidden">To bookmarks</span>
                 </button>
               </div>
-              <div className="property__rating rating">
-                <div className="property__stars rating__stars">
-                  <span style={{ width: "80%" }} />
-                  <span className="visually-hidden">Rating</span>
-                </div>
-                <span className="property__rating-value rating__value">
-                  4.8
-                </span>
-              </div>
+
+              <Rating addClass={'property'} value={rating} showValue />
+
               <ul className="property__features">
                 <li className="property__feature property__feature--entire">
-                  Apartment
+                  {type}
                 </li>
                 <li className="property__feature property__feature--bedrooms">
-                  3 Bedrooms
+                  {`${bedrooms} Bedroom${bedrooms > 1 && 's'}`}
                 </li>
                 <li className="property__feature property__feature--adults">
-                  Max 4 adults
+                  Max {maxAdults} adults
                 </li>
               </ul>
               <div className="property__price">
-                <b className="property__price-value">€120</b>
+                <b className="property__price-value">€{price}</b>
                 <span className="property__price-text">&nbsp;night</span>
               </div>
               <div className="property__inside">
                 <h2 className="property__inside-title">What&apos;s inside</h2>
                 <ul className="property__inside-list">
-                  <li className="property__inside-item">Wi-Fi</li>
-                  <li className="property__inside-item">Washing machine</li>
-                  <li className="property__inside-item">Towels</li>
-                  <li className="property__inside-item">Heating</li>
-                  <li className="property__inside-item">Coffee machine</li>
-                  <li className="property__inside-item">Baby seat</li>
-                  <li className="property__inside-item">Kitchen</li>
-                  <li className="property__inside-item">Dishwasher</li>
-                  <li className="property__inside-item">Cabel TV</li>
-                  <li className="property__inside-item">Fridge</li>
+                  {goods.map((goodsItem) => (
+                    <li
+                      className="property__inside-item"
+                      key={`goods-${goodsItem}`}
+                    >
+                      {goodsItem}
+                    </li>
+                  ))}
                 </ul>
               </div>
               <div className="property__host">
                 <h2 className="property__host-title">Meet the host</h2>
-                <div className="property__host-user user">
-                  <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
-                    <img
-                      className="property__avatar user__avatar"
-                      src="img/avatar-angelina.jpg"
-                      width={74}
-                      height={74}
-                      alt="Host avatar"
-                    />
-                  </div>
-                  <span className="property__user-name">Angelina</span>
-                  <span className="property__user-status">Pro</span>
-                </div>
+                <User user={host} addClass={'property'} />
                 <div className="property__description">
                   <p className="property__text">
-                    A quiet cozy and picturesque that hides behind a a river by
-                    the unique lightness of Amsterdam. The building is green and
-                    from 18th century.
-                  </p>
-                  <p className="property__text">
-                    An independent House, strategically located between Rembrand
-                    Square and National Opera, but where the bustle of the city
-                    comes to rest in this alley flowery and colorful.
+                    {description}
                   </p>
                 </div>
               </div>
-              <section className="property__reviews reviews">
-                <h2 className="reviews__title">
-                  Reviews · <span className="reviews__amount">1</span>
-                </h2>
-                <ReviewsList />
-                <ReviewsForm />
-              </section>
+
+              <Reviews />
             </div>
           </div>
           <section className="property__map map" />
@@ -215,7 +148,7 @@ const Room = () => {
                   </div>
                   <div className="place-card__rating rating">
                     <div className="place-card__stars rating__stars">
-                      <span style={{ width: "80%" }} />
+                      <span style={{ width: '80%' }} />
                       <span className="visually-hidden">Rating</span>
                     </div>
                   </div>
@@ -261,7 +194,7 @@ const Room = () => {
                   </div>
                   <div className="place-card__rating rating">
                     <div className="place-card__stars rating__stars">
-                      <span style={{ width: "80%" }} />
+                      <span style={{ width: '80%' }} />
                       <span className="visually-hidden">Rating</span>
                     </div>
                   </div>
@@ -310,7 +243,7 @@ const Room = () => {
                   </div>
                   <div className="place-card__rating rating">
                     <div className="place-card__stars rating__stars">
-                      <span style={{ width: "100%" }} />
+                      <span style={{ width: '100%' }} />
                       <span className="visually-hidden">Rating</span>
                     </div>
                   </div>
