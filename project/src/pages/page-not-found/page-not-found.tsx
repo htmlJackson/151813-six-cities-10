@@ -1,4 +1,5 @@
 import {Link} from 'react-router-dom';
+import {AppRoute} from '../../const';
 import Header from '../../components/header/header';
 
 const PageNotFound = () => (
@@ -8,7 +9,7 @@ const PageNotFound = () => (
       <div className="cities" style={{'minHeight': '80vh'}}>
         <div className="container">
           <h1>Page not found</h1>
-          <Link to={'/'} style={{'display': 'inline-flex', 'marginBottom': '15px'}}>Back to main page</Link>
+          <Link to={AppRoute.Root} style={{'display': 'inline-flex', 'marginBottom': '15px'}}>Back to main page</Link>
         </div>
       </div>
 

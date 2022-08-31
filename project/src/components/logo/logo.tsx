@@ -1,7 +1,8 @@
 import {Link} from 'react-router-dom';
+import {AppRoute} from '../../const';
 
 const Logo = () => (
-  <Link className="header__logo-link" to={'/'}>
+  <Link className="header__logo-link" to={AppRoute.Root}>
     <img
       className="header__logo"
       src="img/logo.svg"

@@ -1,10 +1,11 @@
 import Header from '../../components/header/header';
 import {useRef, FormEvent, useEffect} from 'react';
-import {useNavigate} from 'react-router-dom';
+import {useNavigate, Link} from 'react-router-dom';
 import {useAppSelector, useAppDispatch} from '../../hooks';
-import {AppRoute} from '../../const';
+import {AppRoute, citiesList} from '../../const';
 import {AuthData} from '../../types/auth-data';
 import {loginAction} from '../../store/api-actions';
+import {changeCity} from '../../store/app-data/app-data';
 
 const Login = () => {
   const loginRef = useRef<HTMLInputElement | null>(null);
@@ -36,6 +37,8 @@ const Login = () => {
       navigate(AppRoute.Root);
     }
   }, [AuthStatus]);
+
+  const randomCity = citiesList[Math.floor(Math.random() * citiesList.length)];
 
   return (
     <div className="page page--gray page--login">
@@ -77,9 +80,9 @@ const Login = () => {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <a className="locations__item-link" href="#">
-                <span>Amsterdam</span>
-              </a>
+              <Link className="locations__item-link" to={AppRoute.Root} onClick={() => dispatch(changeCity(randomCity))}>
+                <span>{randomCity}</span>
+              </Link>
             </div>
           </section>
         </div>
