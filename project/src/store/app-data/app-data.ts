@@ -1,15 +1,18 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {NameSpace, citiesList, emptyOffer} from '../../const';
+import {NameSpace, citiesList, emptyOffer, sortStatusArray} from '../../const';
 import {AppData} from '../../types/state';
-import {fetchOfferAction, fetchOffersAction, fetchCommentsAction} from '../api-actions';
+import {fetchOfferAction, fetchOffersAction, fetchCommentsAction, fetchNearOffersAction, fetchFavoriteOffersAction} from '../api-actions';
 
 const initialState: AppData = {
   city: citiesList[0],
   offers: [],
+  nearOffers: [],
+  favoriteOffers: [],
   currentOffer: emptyOffer,
   activeCard: null,
   comments: [],
-  isDataLoaded: false,
+  isDataLoaded: true,
+  sortStatus: sortStatusArray[0].status,
 };
 
 export const appData = createSlice({
@@ -21,6 +24,9 @@ export const appData = createSlice({
     },
     setActiveCard: (state, action) => {
       state.activeCard = action.payload;
+    },
+    setSortStatus: (state, action) => {
+      state.sortStatus = action.payload;
     },
   },
   extraReducers(builder) {
@@ -37,8 +43,14 @@ export const appData = createSlice({
       })
       .addCase(fetchCommentsAction.fulfilled, (state, action) => {
         state.comments = action.payload;
+      })
+      .addCase(fetchNearOffersAction.fulfilled, (state, action) => {
+        state.nearOffers = action.payload;
+      })
+      .addCase(fetchFavoriteOffersAction.fulfilled, (state, action) => {
+        state.favoriteOffers = action.payload;
       });
   }
 });
 
-export const {changeCity, setActiveCard} = appData.actions;
+export const {changeCity, setActiveCard, setSortStatus} = appData.actions;

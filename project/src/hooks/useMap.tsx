@@ -33,12 +33,12 @@ const useMap = (
 
       isRenderedRef.current = true;
     }
-  }, [mapRef, city]);
+  }, [mapRef, city, map]);
 
   useEffect(() => {
     if (map) {
       map.flyTo([city.lat, city.lng], city.zoom, {
-        animate: true,
+        animate: false,
         duration: 0.9
       });
     }

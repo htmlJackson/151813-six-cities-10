@@ -10,6 +10,7 @@ import {NewReviewData} from '../types/new-review-data';
 
 import {saveToken, dropToken} from '../services/token';
 import { CommentsType } from '../types/comments.js';
+import { AddFavoriteType } from '../types/add-favorite-type.js';
 
 export const fetchOffersAction = createAsyncThunk<OffersType, undefined, {
   dispatch: AppDispatch,
@@ -19,6 +20,30 @@ export const fetchOffersAction = createAsyncThunk<OffersType, undefined, {
   'fetchOffers',
   async (_arg, {dispatch, extra: api}) => {
     const {data} = await api.get<OffersType>(APIRoute.Offers);
+    return data;
+  },
+);
+
+export const fetchNearOffersAction = createAsyncThunk<OffersType, HotelId, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
+  'fetchNearOffers',
+  async (hotelId, {dispatch, extra: api}) => {
+    const {data} = await api.get<OffersType>(`${APIRoute.Offers}/${hotelId}/nearby`);
+    return data;
+  },
+);
+
+export const fetchFavoriteOffersAction = createAsyncThunk<OffersType, undefined, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
+  'fetchFavoriteOffers',
+  async (_arg, {dispatch, extra: api}) => {
+    const {data} = await api.get<OffersType>(`${APIRoute.Favorite}`);
     return data;
   },
 );
@@ -80,6 +105,18 @@ export const addReviewAction = createAsyncThunk<NewReviewData, NewReviewData, {
   'addReview',
   async ({hotelId, comment, rating}, {dispatch, extra: api}) => {
     const {data} = await api.post<NewReviewData>(`${APIRoute.Comments}/${hotelId}`, {comment, rating});
+    return data;
+  },
+);
+
+export const addFavoriteAction = createAsyncThunk<AddFavoriteType, AddFavoriteType, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
+  'addFavorite',
+  async ({hotelId, favoriteStatus}, {dispatch, extra: api}) => {
+    const {data} = await api.post<AddFavoriteType>(`${APIRoute.Favorite}/${hotelId}/${favoriteStatus}`);
     return data;
   },
 );

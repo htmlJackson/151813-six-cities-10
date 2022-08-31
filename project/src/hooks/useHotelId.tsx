@@ -3,7 +3,6 @@ import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { AsyncThunk } from '@reduxjs/toolkit';
 import { HotelId } from '../types/offers';
-
 import {AxiosInstance} from 'axios';
 import {AppDispatch, State} from '../types/state.js';
 
@@ -17,7 +16,7 @@ const useHotelId = (action : AsyncThunk<any, HotelId, {
 
   useEffect(() => {
     dispatch(action(id));
-  }, []);
+  }, [action, dispatch, id]);
 
   return null;
 };

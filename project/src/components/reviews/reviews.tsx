@@ -8,7 +8,6 @@ import { useAppSelector } from '../../hooks';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
 
 const Reviews = () => {
-
   useHotelId(fetchCommentsAction);
   const commentsData = useAppSelector(getComments);
   const authorizationStatus = useAppSelector(getAuthorizationStatus);

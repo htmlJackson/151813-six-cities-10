@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom';
 import { AuthorizationStatus} from '../../const';
 import {logoutAction} from '../../store/api-actions';
 import {getAuthorizationStatus, getUser} from '../../store/user-process/selectors';
+import {getFavoriteOffers} from '../../store/app-data/selectors';
 
 type HeaderProps = {
   noNav?: boolean;
@@ -13,6 +14,7 @@ const Header = ({ noNav = false }: HeaderProps) => {
 
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const userData = useAppSelector(getUser);
+  const favoriteOffers = useAppSelector(getFavoriteOffers);
 
   const dispatch = useAppDispatch();
 
@@ -26,7 +28,7 @@ const Header = ({ noNav = false }: HeaderProps) => {
           {!noNav && (
             <nav className="header__nav">
               <ul className="header__nav-list">
-                {authorizationStatus === AuthorizationStatus.Auth ? (
+                {authorizationStatus === AuthorizationStatus.Auth && userData ? (
                   <>
                     <li className="header__nav-item user">
                       <Link to="/favorites"
@@ -36,7 +38,7 @@ const Header = ({ noNav = false }: HeaderProps) => {
                         <span className="header__user-name user__name">
                           {userData.email}
                         </span>
-                        <span className="header__favorite-count">3</span>
+                        <span className="header__favorite-count">{favoriteOffers.length}</span>
                       </Link>
                     </li>
                     <li className="header__nav-item">

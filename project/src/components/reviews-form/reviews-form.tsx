@@ -1,4 +1,4 @@
-import { useState, FormEvent } from 'react';
+import {Fragment, useState, FormEvent } from 'react';
 import { NewReviewData } from '../../types/new-review-data';
 import { useAppDispatch } from '../../hooks';
 import { fetchCommentsAction, addReviewAction } from '../../store/api-actions';
@@ -47,6 +47,7 @@ const ReviewsForm = () => {
 
     setReviewData('');
     setRatingValue('');
+    window.scrollTo(0, 0);
   };
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
@@ -65,7 +66,7 @@ const ReviewsForm = () => {
       <div className="reviews__rating-form form__rating">
         {
           reviewRating.map((rating) => (
-            <>
+            <Fragment key={`rating-${rating.value}`}>
               <input
                 className="form__rating-input visually-hidden"
                 name="rating"
@@ -79,7 +80,7 @@ const ReviewsForm = () => {
                   <use xlinkHref="#icon-star" />
                 </svg>
               </label>
-            </>)
+            </Fragment>)
           )
         }
       </div>

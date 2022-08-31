@@ -5,7 +5,7 @@ import { CommentsType } from './comments';
 import { Marker } from 'leaflet';
 
 export type UserProcess = {
-  user: UserData;
+  user: UserData | null;
   authorizationStatus: AuthorizationStatus;
 };
 
@@ -21,10 +21,13 @@ export type UserData = {
 export type AppData = {
   city: string;
   offers: OffersType;
+  nearOffers: OffersType;
+  favoriteOffers: OffersType;
   currentOffer: OfferType;
   activeCard: Marker | null;
   comments: CommentsType;
   isDataLoaded: boolean;
+  sortStatus: string;
 };
 
 export type State = ReturnType<typeof store.getState>;

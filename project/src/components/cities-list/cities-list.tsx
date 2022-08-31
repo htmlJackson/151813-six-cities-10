@@ -1,7 +1,6 @@
-import {useAppDispatch} from '../../hooks';
+import {useAppDispatch, useAppSelector} from '../../hooks';
 import {changeCity} from '../../store/app-data/app-data';
 import { citiesList } from '../../const';
-import { useAppSelector } from '../../hooks';
 import {getCity} from '../../store/app-data/selectors';
 
 const CitiesList = () => {

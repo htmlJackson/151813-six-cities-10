@@ -4,7 +4,7 @@ import {UserProcess} from '../../types/state';
 import {checkAuthAction, loginAction, logoutAction} from '../api-actions';
 
 const initialState: UserProcess = {
-  user: {},
+  user: null,
   authorizationStatus: AuthorizationStatus.Unknown,
 };
 

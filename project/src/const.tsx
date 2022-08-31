@@ -19,11 +19,31 @@ export const URL_MARKER_CURRENT =
 
 export const citiesList = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
 
+export const sortStatusArray = [
+  {
+    status: 'popular',
+    desciption: 'Popular',
+  },
+  {
+    status: 'price-from-low',
+    desciption: 'Price: low to high',
+  },
+  {
+    status: 'price-from-high',
+    desciption: 'Price: high to low',
+  },
+  {
+    status: 'rating-from-high',
+    desciption: 'Top rated first',
+  },
+];
+
 export enum APIRoute {
   Offers = '/hotels',
   Login = '/login',
   Logout = '/logout',
   Comments = '/comments',
+  Favorite = '/favorite',
 }
 
 export enum NameSpace {
