@@ -36,7 +36,7 @@ const Login = () => {
     if (AuthStatus === 'AUTH') {
       navigate(AppRoute.Root);
     }
-  }, [AuthStatus]);
+  }, [AuthStatus, navigate]);
 
   const randomCity = citiesList[Math.floor(Math.random() * citiesList.length)];
 
