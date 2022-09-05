@@ -5,18 +5,23 @@ import { AuthorizationStatus} from '../../const';
 import {logoutAction} from '../../store/api-actions';
 import {getAuthorizationStatus, getUser} from '../../store/user-process/selectors';
 import {getFavoriteOffers} from '../../store/app-data/selectors';
+import {checkAuthAction} from '../../store/api-actions';
 
 type HeaderProps = {
   noNav?: boolean;
 };
 
 const Header = ({ noNav = false }: HeaderProps) => {
+  const dispatch = useAppDispatch();
 
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const userData = useAppSelector(getUser);
   const favoriteOffers = useAppSelector(getFavoriteOffers);
 
-  const dispatch = useAppDispatch();
+  const handleSignOutClick = () => {
+    dispatch(logoutAction());
+    setTimeout(() => dispatch(checkAuthAction()), 100);
+  };
 
   return (
     <header className="header">
@@ -42,7 +47,7 @@ const Header = ({ noNav = false }: HeaderProps) => {
                       </Link>
                     </li>
                     <li className="header__nav-item">
-                      <a className="header__nav-link" onClick={() => dispatch(logoutAction())}>
+                      <a className="header__nav-link" onClick={handleSignOutClick}>
                         <span className="header__signout">Sign out</span>
                       </a>
                     </li>

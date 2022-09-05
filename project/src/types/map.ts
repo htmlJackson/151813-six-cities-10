@@ -5,10 +5,10 @@ export type City = {
   zoom: number;
 };
 
-export type Marker = {
+export type MarkerType = {
   latitude: number;
   longitude: number;
   zoom: number;
 };
 
-export type Markers = Marker[];
+export type Markers = MarkerType[];

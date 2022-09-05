@@ -2,9 +2,9 @@ import Header from '../../components/header/header';
 import {useRef, FormEvent, useEffect} from 'react';
 import {useNavigate, Link} from 'react-router-dom';
 import {useAppSelector, useAppDispatch} from '../../hooks';
-import {AppRoute, citiesList} from '../../const';
+import {AppRoute, AuthorizationStatus, citiesList} from '../../const';
 import {AuthData} from '../../types/auth-data';
-import {loginAction} from '../../store/api-actions';
+import {loginAction, checkAuthAction} from '../../store/api-actions';
 import {changeCity} from '../../store/app-data/app-data';
 
 const Login = () => {
@@ -16,7 +16,10 @@ const Login = () => {
 
   const onSubmit = (authData: AuthData) => {
     dispatch(loginAction(authData));
-    navigate(AppRoute.Root);
+    setTimeout(() => {
+      dispatch(checkAuthAction());
+      navigate(AppRoute.Root);
+    }, 100);
   };
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
@@ -33,7 +36,7 @@ const Login = () => {
   const AuthStatus = useAppSelector((state) => state.USER.authorizationStatus);
 
   useEffect(() => {
-    if (AuthStatus === 'AUTH') {
+    if (AuthStatus === AuthorizationStatus.Auth) {
       navigate(AppRoute.Root);
     }
   }, [AuthStatus, navigate]);
@@ -66,6 +69,7 @@ const Login = () => {
                   type="password"
                   name="password"
                   placeholder="Password"
+                  pattern="(?=.*\d)(?=.*[a-zA-Z]).*"
                   required
                   ref={passwordRef}
                 />

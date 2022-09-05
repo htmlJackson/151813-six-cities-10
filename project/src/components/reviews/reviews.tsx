@@ -6,6 +6,7 @@ import { fetchCommentsAction } from '../../store/api-actions';
 import { getComments } from '../../store/app-data/selectors';
 import { useAppSelector } from '../../hooks';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
+import { AuthorizationStatus } from '../../const';
 
 const Reviews = () => {
   useHotelId(fetchCommentsAction);
@@ -18,7 +19,7 @@ const Reviews = () => {
         Reviews · <span className="reviews__amount">{commentsData.length}</span>
       </h2>
       <ReviewsList commentsData={commentsData} />
-      { authorizationStatus === 'AUTH' && <ReviewsForm /> }
+      { authorizationStatus === AuthorizationStatus.Auth && <ReviewsForm /> }
     </section>
   );
 };

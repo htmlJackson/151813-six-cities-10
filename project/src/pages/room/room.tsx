@@ -37,6 +37,7 @@ const Room = () => {
     goods,
     host,
     description,
+    location,
   } = hotelData;
 
   const [favState, setFavState] = useState(isFavorite);
@@ -140,7 +141,7 @@ const Room = () => {
               <Reviews />
             </div>
           </div>
-          <Map addClass='property' nearOnly />
+          <Map addClass='property' nearOnly currentOfferLocation={location} />
         </section>
         <div className="container">
           <NearPlaces />
